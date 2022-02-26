@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>.: Cadastro de Pessoas :.</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/buttons.dataTables.min.css" media="screen" />
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css" media="screen" />
+
+    </head>
+    <body onload="load()">
+
+        <br/>
+
+        <div class="text-center">
+            <font style="font-size: 30px;" class="text-center">Cadastro de Pessoas</font>
+        </div>
+
+        <br/>
+
+        <div class="container">
+
+            <div class="form-row">
+                <div class="col-md-6">
+                    <div class="text-left">
+                        <button type="submit" class="btn btn-primary" onclick="window.location.href = './index.html'" ><i class="fa fa-plus" aria-hidden="true"></i> Novo registro</button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-right">
+                        <button type="submit" class="btn btn-primary" onclick="viewUser()"><i class="fa fa-search-plus" aria-hidden="true"></i> Vizualizar pessoas</button>
+                    </div>
+                </div>
+            </div>
+    
+            <br/>
+
+            <div class="card" id="inputData">
+                <div class="card-header" style="background-color: #8A39E1;  color: #ffffff; font-size: 20px; padding: 5px 0px 5px 20px;">Cadastrar pessoa</div>
+                <div class="card-body">
+                    
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1">Nome</label>
+                                <input class="form-control " name="nome" id ="nome" type="text" placeholder="Primeiro nome" required autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1">Sobrenome</label>
+                                <input class="form-control " name="sobrenome" id="sobrenome" type="text" placeholder="Sobrenome" required autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1">Email</label>
+                                <input class="form-control " name="email" id="email" type="email" placeholder="Informe seu e-mail" required autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1">Telefone</label>
+                                <input class="form-control " name="telefone" id="telefone" type="tel" placeholder="Informe seu telefone" required autocomplete="off"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1">Data de nascimento</label>
+                                <input class="form-control " name="nascimento" id="nascimento" type="date" placeholder="Informe a data de nascimento" required autocomplete="off"/>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1">Profissão</label>
+                                <input class="form-control " name="profissao" id="profissao" type="text" placeholder="Informe sua profissao" required autocomplete="off"/>   
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">                      
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1">Sexo</label>
+                                <select class="form-control " name="sexo" id="sexo" required autocomplete="off">
+                                    <option value=""></option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1">Estado Civil</label>
+                                <select class="form-control " name="civil" id="civil" required autocomplete="off">
+                                    <option value=""></option>
+                                    <option value="Casado">Casado (a)</option>
+                                    <option value="Solteiro">Solteiro (a)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br/>
+
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-success btn-block" id="submit" onclick="store()"><i class="fa fa-check-square-o" aria-hidden="true"></i> Salvar</button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-danger btn-block" onclick="clearFields()"><i class="fa fa-eraser" aria-hidden="true"></i> Limpar a tela</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="card" id="viewUsers">
+                <div class="card-header" style="background-color: #8A39E1;  color: #ffffff; font-size: 20px; padding: 5px 0px 5px 20px;" >Dados pessoa</div>
+                <div class="card-body">
+
+                    <br/>
+
+                    <div id="datatable">
+
+                            <table class="table" id="pessoa" class="display nowrap" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nome</th>
+                                        <th>Sobrenome</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Nascimento</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="userDetails">
+
+                                </tbody>
+
+                            </table>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <br/>
+
+        </div>
+
+        <script src="js/style.min.js "></script>
+        <script src="js/jquery-3.5.1.js"></script>
+        <script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/dataTables.buttons.min.js"></script>
+        <script src="js/jszip.min.js"></script>
+        <script src="js/pdfmake.min.js"></script>
+        <script src="js/vfs_fonts.js"></script>
+        <script src="js/buttons.html5.min.js"></script>
+        <script src="js/buttons.print.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('#pessoa').DataTable( {
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                } );
+            } );
+        </script>
+
+    </body>
+</html>
